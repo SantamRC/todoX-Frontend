@@ -1,4 +1,4 @@
-import { FC,Fragment,Dispatch,SetStateAction } from 'react';
+import { FC,Fragment,Dispatch,SetStateAction,useState } from 'react';
 import { useQuery } from 'react-query';
 import { List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 import { CheckCircleOutline, RadioButtonUnchecked } from '@mui/icons-material';
@@ -7,6 +7,11 @@ import Paper from '@mui/material/Paper';
 import axios from 'axios';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 import AddDialog from "./AddDialog"
 import EditDialog from "./EditDialog";
@@ -28,14 +33,26 @@ interface Ifc{
   showSnackBar: Dispatch<SetStateAction<null | string>>
 }
 
-const fetchTodos = async () => {
-  const { data } = await axios.get('http://localhost:4000/api/todos?limit=10&page=1');
+const fetchTodos = async (limit:string,page:string) => {
+  const { data } = await axios.get(`http://localhost:4000/api/todos?limit=${limit}&page=${page}`);
   return data as Response;
 };
 
 
 const TodoList: FC<Ifc> = (props:Ifc) => {
-  const { data, isLoading } = useQuery('todos', fetchTodos);
+  const [limit,setLimit]=useState(10);
+  const [page,setPage] = useState(1);
+  const { data, isLoading,refetch } = useQuery('todos', ()=>fetchTodos(limit.toString(),page.toString()));
+
+  const changeLimit=(val:string|number)=>{
+    setLimit(Number(val));
+    refetch();
+  }
+
+  const changePage=(val:number)=>{
+    setPage(val);
+    refetch();
+  }
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -43,6 +60,23 @@ const TodoList: FC<Ifc> = (props:Ifc) => {
   return (
     <Fragment>
       <AddDialog showSnackBar={props.showSnackBar}/>
+      <Box sx={{ minWidth: 120,marginTop:2 }}>
+      <FormControl>
+        <InputLabel id="demo-simple-select-label">Limit</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={limit}
+          label="Age"
+          onChange={e=>changeLimit(e.target.value)}
+        >
+          <MenuItem value={5}>5</MenuItem>
+          <MenuItem value={10}>10</MenuItem>
+          <MenuItem value={20}>20</MenuItem>
+          <MenuItem value={30}>30</MenuItem>
+        </Select>
+      </FormControl>
+    </Box>
       <List>
         {data?.todos.map((todo) => (
           <Paper elevation={1} style={{margin:10, backgroundColor:'#f2edfa'}}>
@@ -55,7 +89,7 @@ const TodoList: FC<Ifc> = (props:Ifc) => {
         ))}
       </List>
       {data && <Stack spacing={2} alignItems="center">
-        <Pagination count={Number(data?.totalPages)} color="primary" />
+        <Pagination count={Number(data?.totalPages)} color="primary" page={page} onChange={(_,p)=>changePage(p)} />
       </Stack>}
     </ Fragment>
   );
