@@ -15,7 +15,11 @@ interface Todo {
     title: string;
     description: string;
     status: boolean;
-  }
+}
+
+interface Ifc{
+  showSnackBar: React.Dispatch<React.SetStateAction<null | string>>
+}
 
 const addTodo = async (title:string,desc:string) => {
     let payload = JSON.stringify({
@@ -37,7 +41,7 @@ let config = {
     return data.todos as Todo[];
   };
 
-export default function FormDialog() {
+export default function FormDialog(props:Ifc) {
   const [open, setOpen] = React.useState(false);
   const [title,setTitle] = React.useState('');
   const [description,setDescription] = React.useState('');
@@ -52,6 +56,8 @@ export default function FormDialog() {
 
   const handleSubmit = () => {
     addTodo(title,description);
+    handleClose();
+    props.showSnackBar("Added New Task")
   }
 
   return (

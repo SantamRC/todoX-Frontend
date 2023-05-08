@@ -7,6 +7,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Delete } from '@mui/icons-material';
+import IconButton from '@mui/material/IconButton';
 import { useQuery } from 'react-query';
 import axios from 'axios';
 
@@ -52,9 +53,9 @@ export default function FormDialog({id}:FormProp) {
 
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
+      <IconButton color="error" onClick={handleClickOpen}>
         <Delete/>
-      </Button>
+      </IconButton>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Are You Sure You Want to Delete the Task?</DialogTitle>
         <DialogActions>

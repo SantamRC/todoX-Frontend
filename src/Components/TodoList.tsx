@@ -1,4 +1,4 @@
-import { FC,Fragment } from 'react';
+import { FC,Fragment,Dispatch,SetStateAction } from 'react';
 import { useQuery } from 'react-query';
 import { List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 import { CheckCircleOutline, RadioButtonUnchecked } from '@mui/icons-material';
@@ -24,13 +24,17 @@ interface Response{
   totalPages:string
 }
 
+interface Ifc{
+  showSnackBar: Dispatch<SetStateAction<null | string>>
+}
+
 const fetchTodos = async () => {
   const { data } = await axios.get('http://localhost:4000/api/todos?limit=10&page=1');
   return data as Response;
 };
 
 
-const TodoList: FC = () => {
+const TodoList: FC<Ifc> = (props:Ifc) => {
   const { data, isLoading } = useQuery('todos', fetchTodos);
 
   if (isLoading) {
@@ -38,18 +42,11 @@ const TodoList: FC = () => {
   }
   return (
     <Fragment>
-      <AddDialog />
+      <AddDialog showSnackBar={props.showSnackBar}/>
       <List>
         {data?.todos.map((todo) => (
-          <Paper elevation={1} style={{margin:10, backgroundColor:'#deedfc'}}>
+          <Paper elevation={1} style={{margin:10, backgroundColor:'#f2edfa'}}>
             <ListItem key={todo._id}>
-              <ListItemIcon>
-                {todo.status ? (
-                  <CheckCircleOutline color="primary" />
-                ) : (
-                  <RadioButtonUnchecked color="primary" />
-                )}
-              </ListItemIcon>
               <ListItemText primary={todo.title} secondary={todo.description} />
               <ListItemIcon><EditDialog id={todo._id} /></ListItemIcon>
               <ListItemIcon><DeleteDialog id={todo._id} /></ListItemIcon>

@@ -6,6 +6,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import IconButton from '@mui/material/IconButton';
 import { Edit } from '@mui/icons-material';
 import { useQuery } from 'react-query';
 import axios from 'axios';
@@ -61,9 +62,9 @@ export default function FormDialog({id}:FormProp) {
 
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
+      <IconButton color="primary" onClick={handleClickOpen}>
         <Edit/>
-      </Button>
+      </IconButton>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Edit Task</DialogTitle>
         <DialogContent>
