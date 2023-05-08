@@ -5,7 +5,7 @@ import TodoList from './Components/TodoList';
 const App: FC = () => {
   return (
     <Container maxWidth="md">
-      <h1>Todo App</h1>
+      <h1>TodoX</h1>
       <TodoList />
     </Container>
   );
