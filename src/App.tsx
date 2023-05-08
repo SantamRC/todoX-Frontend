@@ -39,7 +39,7 @@ const App: FC = () => {
     <AppBar /> 
     <Container maxWidth="md">
     <TodoList showSnackBar={showSnackBar} />
-      <Snackbar
+      <Snackbar //SnackBar on the Home Page
         open={snack?true:false}
         autoHideDuration={4000}
         onClose={handleClose}

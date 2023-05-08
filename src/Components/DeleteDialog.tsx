@@ -56,6 +56,7 @@ export default function FormDialog({id}:FormProp) {
       <IconButton color="error" onClick={handleClickOpen}>
         <Delete/>
       </IconButton>
+      {/* Delete Confirmation Dialog Box */}
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Are You Sure You Want to Delete the Task?</DialogTitle>
         <DialogActions>
