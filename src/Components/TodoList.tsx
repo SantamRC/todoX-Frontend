@@ -6,6 +6,8 @@ import { CheckCircleOutline, RadioButtonUnchecked,Delete, Edit } from '@mui/icon
 import axios from 'axios';
 
 import AddDialog from "./AddDialog"
+import EditDialog from "./EditDialog";
+import DeleteDialog from "./DeleteDialog"
 
 interface Todo {
   _id: string;
@@ -31,6 +33,7 @@ const TodoList: FC = () => {
     <AddDialog />
     <List>
       {todos?.map((todo) => (
+        <>
         <ListItem key={todo._id}>
           <ListItemIcon>
             {todo.status ? (
@@ -40,9 +43,10 @@ const TodoList: FC = () => {
             )}
           </ListItemIcon>
           <ListItemText primary={todo.title} secondary={todo.description} />
-          <ListItemIcon><Edit /></ListItemIcon>
-          <ListItemIcon><Delete /></ListItemIcon>
+          <ListItemIcon><EditDialog id={todo._id} /></ListItemIcon>
+          <ListItemIcon><DeleteDialog id={todo._id} /></ListItemIcon>
         </ListItem>
+        </>
       ))}
     </List>
     </>
