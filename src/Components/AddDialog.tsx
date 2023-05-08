@@ -6,7 +6,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { useQuery } from 'react-query';
+import Fab from '@mui/material/Fab';
+import AddIcon from '@mui/icons-material/Add';
 import axios from 'axios';
 
 interface Todo {
@@ -55,9 +56,10 @@ export default function FormDialog() {
 
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
+      <Fab variant="extended" color='success' onClick={handleClickOpen} style={{position:'fixed',bottom:20,right:20}}>
+        <AddIcon />
         Add New Task
-      </Button>
+      </Fab>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>New Task</DialogTitle>
         <DialogContent>
