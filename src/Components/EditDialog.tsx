@@ -58,6 +58,8 @@ export default function FormDialog({id}:FormProp) {
 
   const handleSubmit = () => {
     editTodo(title,description,id);
+    handleClose();
+    window.location.reload();
   }
 
   return (

@@ -22,7 +22,7 @@ interface FormProp{
     id:string
 }
 
-const deleteTodo = async (title:string,desc:string,id:string) => {
+const deleteTodo = async (id:string) => {
       let config = {
         method: 'delete',
         maxBodyLength: Infinity,
@@ -36,8 +36,6 @@ const deleteTodo = async (title:string,desc:string,id:string) => {
 
 export default function FormDialog({id}:FormProp) {
   const [open, setOpen] = React.useState(false);
-  const [title,setTitle] = React.useState('');
-  const [description,setDescription] = React.useState('');
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -48,7 +46,9 @@ export default function FormDialog({id}:FormProp) {
   };
 
   const handleSubmit = () => {
-    deleteTodo(title,description,id);
+    deleteTodo(id);
+    handleClose();
+    window.location.reload();
   }
 
   return (

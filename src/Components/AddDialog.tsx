@@ -58,6 +58,7 @@ export default function FormDialog(props:Ifc) {
     addTodo(title,description);
     handleClose();
     props.showSnackBar("Added New Task")
+    window.location.reload();
   }
 
   return (
