@@ -6,6 +6,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import Alert from '@mui/material/Alert';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import axios from 'axios';
@@ -45,6 +46,7 @@ export default function FormDialog(props:Ifc) {
   const [open, setOpen] = React.useState(false);
   const [title,setTitle] = React.useState('');
   const [description,setDescription] = React.useState('');
+  const [err,showError] = React.useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -55,10 +57,13 @@ export default function FormDialog(props:Ifc) {
   };
 
   const handleSubmit = () => {
-    addTodo(title,description);
-    handleClose();
-    props.showSnackBar("Added New Task")
-    window.location.reload();
+    if(title && description){
+      addTodo(title,description);
+      handleClose();
+      props.showSnackBar("Added New Task")
+      window.location.reload();
+    }else showError(true)
+    
   }
 
   return (
@@ -73,6 +78,7 @@ export default function FormDialog(props:Ifc) {
           <DialogContentText>
             Fill in the details of the new task.
           </DialogContentText>
+          {err && <Alert severity="error">Fill All the Details</Alert>}
           <TextField
             autoFocus
             margin="dense"

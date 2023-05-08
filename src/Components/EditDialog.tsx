@@ -8,7 +8,6 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import IconButton from '@mui/material/IconButton';
 import { Edit } from '@mui/icons-material';
-import { useQuery } from 'react-query';
 import axios from 'axios';
 
 interface Todo {
